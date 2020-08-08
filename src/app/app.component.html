@@ -1,0 +1,76 @@
+<div class="container pt-4">
+  <div class="row">
+    <div class="col-md-3">
+        <h3>{{title}}</h3>
+    </div>
+    <div class="col-md-9">
+      <button class="btn btn-primary" (click)="openFormModal()">Add Task</button>
+    </div>
+  </div>
+  <div class="row p-4">
+    <div class="col-md-3">
+      <div class="drag-container">
+        <div class="section-heading">BackLogs</div>
+        <div cdkDropList #backlogsList="cdkDropList" [cdkDropListData]="backlogs"
+          [cdkDropListConnectedTo]="[developmentList,reviewList]" class="item-list" (cdkDropListDropped)="drop($event)">
+          <div *ngIf="(backlogs.length === 0);else backlogContent"><label>No items available</label></div>
+          <div class="item-box" #backlogContent *ngFor="let item of backlogs" cdkDrag>
+            <details>
+              <summary>{{item.title}}</summary>
+              <p>Description: {{item.description}}</p>
+              <p>Due Date: {{item.dueDate.day}}/{{ item.dueDate.month}}/{{item.dueDate.year}}</p>
+            </details>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="drag-container">
+        <div class="section-heading">Development</div>
+        <div cdkDropList #developmentList="cdkDropList" [cdkDropListData]="development"
+          [cdkDropListConnectedTo]="[backlogsList,reviewList]" class="item-list" (cdkDropListDropped)="drop($event)">
+          <div *ngIf="(development.length === 0);else developmentContent"><label>No items available</label></div>
+          <div class="item-box" #developmentContent *ngFor="let item of development" cdkDrag>
+            <details>
+              <summary>{{item.title}}</summary>
+              <p>Description: {{item.description}}</p>
+              <p>Due Date: {{item.dueDate.day}}/{{ item.dueDate.month}}/{{item.dueDate.year}}</p>
+            </details>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="drag-container">
+        <div class="section-heading">Code Review</div>
+        <div cdkDropList #reviewList="cdkDropList" [cdkDropListData]="review"
+          [cdkDropListConnectedTo]="[developmentList,backlogsList,acceptanceList]" class="item-list" (cdkDropListDropped)="drop($event)">
+          <div *ngIf="(review.length === 0);else reviewContent"><label>No items available</label></div>
+          <div class="item-box" #reviewContent *ngFor="let item of review" cdkDrag>
+            <details>
+              <summary>{{item.title}}</summary>
+              <p>Description: {{item.description}}</p>
+              <p>Due Date: {{item.dueDate.day}}/{{ item.dueDate.month}}/{{item.dueDate.year}}</p>
+            </details>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="drag-container">
+        <div class="section-heading">Acceptance</div>
+        <div cdkDropList #acceptanceList="cdkDropList" [cdkDropListData]="acceptance"
+          [cdkDropListConnectedTo]="[reviewList]" class="item-list" (cdkDropListDropped)="drop($event)">
+          <div *ngIf="(acceptance.length === 0);else acceptanceContent"><label>No items available</label></div>
+          <div class="item-box-green" #acceptanceContent *ngFor="let item of acceptance" cdkDrag>
+            <details>
+              <summary>{{item.title}}</summary>
+              <p>Description: {{item.description}}</p>
+              <p>Due Date: {{item.dueDate.day}}/{{ item.dueDate.month}}/{{item.dueDate.year}}</p>
+            </details>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
